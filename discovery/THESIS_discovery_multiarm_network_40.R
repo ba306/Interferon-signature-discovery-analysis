@@ -531,7 +531,7 @@ lapply(IFN_list_ind, length)
 # [1] 6
 
 # Intersection between different groups?
-intersect(IFN_list_ind$a,IFN_list_ind$b) %>% length() #26 ----> all IFNa signatures in IFNb 
+intersect(IFN_list_ind$a,IFN_list_ind$b) %>% length() #20 ----> all IFNa signatures in IFNb 
 intersect(IFN_list_ind$b,IFN_list_ind$g) %>% length() #0 
 
 # all IFNa genes are also present in IFNb so for IFN b remove those common genes
