@@ -27,7 +27,7 @@ load(
                 "discovery_exp_meta_rdata.RData"))
 
 # Load our IFN signatures
-IFN_list_ind=readRDS(paste0(data_dir_2," IFN_Aybey_finallist.RDS"))
+IFN_list_ind=readRDS(paste0(save_dir,"IFN_Aybey_finallist.RDS"))
 
 # Metadata formatting for plotting 
 fuji_df$rows=rownames(fuji_df)
