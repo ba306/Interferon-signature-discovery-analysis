@@ -456,7 +456,7 @@ ziegler_grob <- grid::grid.grabExpr(draw(ziegler_beas_p, heatmap_legend_side = "
 
 # Arrange the heatmap and ggplot together
 
-pdf(paste0(save_dir_2,"Discovery_heatmap_all.pdf"),
+pdf(paste0(save_dir,"Discovery_heatmap_all.pdf"),
     width = 45,height = 50 )
 plot_grid(
   plot_grid(jank_grob,

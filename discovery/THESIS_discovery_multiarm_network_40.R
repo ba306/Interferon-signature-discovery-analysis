@@ -312,7 +312,7 @@ bottom = richtext_grob(
 hist_final_plot=grid.arrange(grobs=hist_list%>% map(~.x + labs(x=NULL, y=NULL)), ncol =3, 
                     left = yleft, bottom = bottom)
 
-ggsave(paste0(save_dir2,"p_val_distribution_disc_datasets.pdf"), width = 14,height = 12,scale=1,
+ggsave(paste0(save_dir,"p_val_distribution_disc_datasets.pdf"), width = 14,height = 12,scale=1,
        plot = hist_final_plot)
 
 #### Network meta-analysis ####
