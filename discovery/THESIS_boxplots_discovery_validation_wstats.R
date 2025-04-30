@@ -19,7 +19,7 @@ bracket_size=1.5
 # for datasets with 2 samples each e.g. Rai and Fujiwara no stats added
 
 data_dir="data/IFN_bulk/" 
-data_dir="discovery/" 
+save_dir="discovery/" 
 
 # Load discovery dataset expression matrices + metadata
 load(
