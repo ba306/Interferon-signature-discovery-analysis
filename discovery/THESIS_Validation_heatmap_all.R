@@ -377,7 +377,7 @@ lee_p_grob <- grid::grid.grabExpr(draw(lee_p, heatmap_legend_side = "top",
 
 # Arrange the heatmap and ggplot together
 
-pdf(paste0(save_dir_2,"Validation_heatmap_all.pdf"),
+pdf(paste0(save_dir,"Validation_heatmap_all.pdf"),
     width = 45,height = 50 )
 plot_grid(
   ziegler_2_p_grob,ziegler_beas_p_grob,devlin_p_grob,lee_p_grob,nrow=2,
