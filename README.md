@@ -1,6 +1,15 @@
-# Chapter 2: Diverging routes of IFN-I and IFN-II signaling: the road less taken"
+# Expression signatures with specificity for type I and II IFN response and relevance for autoimmune diseases and cancer 
 
-Author: Bogac Aybey
+Manuscript in revision
 
-Scripts to reproduce analysis and figures in the second chapter of my thesis. 
+### Authors: 
+Bogac Aybey, Benedikt Brors, and Eike Staub
+
+This Git repository contains all the scripts to generate the figures and tables in our paper. 
+
+To be updated
+
+## Contact
+
+Bogac Aybey: [bogac.aybey@stud.uni-heidelberg.de](mailto:bogac.aybey@stud.uni-heidelberg.de)
 
