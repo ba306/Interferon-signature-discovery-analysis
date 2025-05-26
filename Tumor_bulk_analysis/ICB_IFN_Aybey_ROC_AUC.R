@@ -232,7 +232,7 @@ auc_results = auc_results[order(-auc_results$Mean_AUC), ]
 auc_results[,-1]=round(auc_results[,-1],2)
 
 # Save sorted AUC results
-write.csv(auc_results, paste0(data_dir, "ICB_IFN_signature_AUCs_ranked.csv"), row.names = FALSE)
+write.csv(auc_results, paste0(save_dir, "ICB_IFN_signature_AUCs_ranked.csv"), row.names = FALSE)
 
 
 
