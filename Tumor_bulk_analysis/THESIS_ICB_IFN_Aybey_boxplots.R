@@ -42,6 +42,9 @@ imvigor <-
          received_platinum,sample_collected_pre_platinum) %>%
   collect()
 
+#imvigor=saveRDS(paste0(data_dir,"IMVIGOR210_exp_meta_IFNgenes.RDS"))
+imvigor=readRDS(paste0(data_dir,"IMVIGOR210_exp_meta_IFNgenes.RDS"))
+
 # remove samples without response info
 imvigor=imvigor[!is.na(imvigor$binaryresponse),]
 
