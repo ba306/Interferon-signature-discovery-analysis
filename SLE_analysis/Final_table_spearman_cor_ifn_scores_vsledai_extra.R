@@ -7,7 +7,7 @@ save_dir="SLE_analysis/"
 # spearman corr scores and number of genes
 
 txt_files=list.files(save_dir,recursive = F,
-  pattern = "spearman_cor_ifn_scores_vsledai.txt",
+  pattern = "GSE.*_spearman_cor_ifn_scores_vsledai.txt",
   full.names = T)
 
 gses=gsub("SLE_analysis//(.*)_spearman_cor_ifn_scores_vsledai.txt","\\1",txt_files)
