@@ -1,7 +1,8 @@
-# Analysis on Greenland dataset
-# UMAP based on our cell type gene set followed by showing our IFN signature scores on UMAP
+# Analysis on Greenland dataset (IFN-b, IFN-g, TNFa and control)
 # Violin plots for different IFN signature scores
+# UMAP based on our cell type gene set followed by showing our IFN signature scores on UMAP
 
+options(ggrepel.max.overlaps = Inf)
 library(Seurat)
 library(uwot)
 library(ggrepel)
@@ -10,11 +11,11 @@ library(reshape2)
 library(varhandle)
 library(qs)
 library(ggpubr)
-options(ggrepel.max.overlaps = Inf)
 library(emmeans)
 library(rstatix)
 library(patchwork)
-
+library(cowplot)
+library(foreach)
 set.seed(42)
 
 save_dir="greenland_scRNAseq_analysis/" 
@@ -118,13 +119,11 @@ vlnmeanscore_stat=foreach(i= unq_variable) %do% {
       group_by(cell_type_fine) %>%
       t_test(value ~ stimulation, p.adjust.method = "bonferroni",ref.group = "IFNg",alternative = "greater")
   }
-  pwc
   
   
   # Visualization: box plots with p-values
   pwc <- pwc %>% add_xy_position(x = "cell_type_fine")
-  pwc
-  
+
   print(df_melt %>% 
           filter(variable==i)%>%
           ggplot(aes(x=cell_type_fine, y=value
@@ -160,10 +159,8 @@ legend <- get_legend(
     facet_wrap(facets = "variable",nrow = 5,scales = "free")+
     theme(legend.position='top',text = element_text(size = text_size),
           legend.text = element_text(size = text_size))+
-    ylab("")+xlab("")+
-    stat_pvalue_manual(pwc,label = "p.adj.signif",label.size = 6)) 
+    ylab("")+xlab("")) 
 
-plot(legend)
 
 # Add a common y-axis label
 common_label <- ggdraw() +
@@ -217,6 +214,11 @@ pbmc_f_celltype <- RunPCA(pbmc_f_celltype,
                           features = rownames(pbmc_f_celltype))
 ElbowPlot(pbmc_f_celltype)
 pbmc_f_celltype <- RunUMAP(pbmc_f_celltype, dims = 1:5)
+
+reds=pbmc@reductions
+
+reds=readRDS(paste0(data_dir,"sun_UMAP_reductions_ourcelltype_new.RDS"))
+pbmc@reductions=reds
 
 # um_ourgenes_cell_types showing cell types 
 um_ourgenes_cell_types=DimPlot(pbmc, reduction = "umap",group.by="fine_RF_annot",label=T,pt.size = 2,
@@ -308,18 +310,6 @@ um_clustergenes$IFNsignature=ifelse(rownames(um_clustergenes)%in%rosetta_new$IFN
 ) 
 
 um_clustergenes$gene=rownames(um_clustergenes)
-our_umap=ggplot(um_clustergenes,aes(V1,V2,colour=IFNsignature)) +
-  geom_point(size=5) + theme_bw()+
-  theme( legend.position="top", 
-         legend.spacing.x = unit(0.1, 'cm'),
-         text = element_text(size = 30),
-         axis.text.x = element_text(size = 30),  # Increase x-axis labels size
-         axis.text.y = element_text(size = 30))+
-  geom_text_repel(aes(label =  as.character (gene)),
-                  nudge_x = 0.1, direction = "y",size =10,show.legend = F,force = 10)+
-  xlab( "UMAP_1")+ylab("UMAP_2")+ 
-  scale_color_discrete(name = "IFN signature")
-
 
 ## umap based on ifn i and ifn ii published gene sets
 data_j_i_ii_pub=data_j[rownames(data_j) %in% c(IFNI_genes,IFNII_genes),]
@@ -335,6 +325,24 @@ umap_clustergenes_pub$IFNsignature=ifelse(rownames(umap_clustergenes_pub)%in%com
 ) 
 
 umap_clustergenes_pub$gene=rownames(umap_clustergenes_pub)
+
+save(um_clustergenes,umap_clustergenes_pub,file = paste0(save_dir,"UMAP_gene_data.RData"))
+
+# Umap plots generated
+load(file = paste0(save_dir,"UMAP_gene_data.RData"))
+
+our_umap=ggplot(um_clustergenes,aes(V1,V2,colour=IFNsignature)) +
+  geom_point(size=5) + theme_bw()+
+  theme( legend.position="top", 
+         legend.spacing.x = unit(0.1, 'cm'),
+         text = element_text(size = 30),
+         axis.text.x = element_text(size = 30),  # Increase x-axis labels size
+         axis.text.y = element_text(size = 30))+
+  geom_text_repel(aes(label =  as.character (gene)),
+                  nudge_x = 0.1, direction = "y",size =10,show.legend = F,force = 10)+
+  xlab( "UMAP_1")+ylab("UMAP_2")+ 
+  scale_color_discrete(name = "IFN signature")
+
 published_umap=ggplot(umap_clustergenes_pub,aes(V1,V2,color=IFNsignature)) +
   geom_point(size=5) +  theme_bw()+
   theme(legend.position="top", 
