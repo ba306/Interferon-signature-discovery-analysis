@@ -4,8 +4,8 @@ library(foreach)
 library(correlation)
 library(gridExtra)
 library(ggpubr)
-library(xopggexpdatasets)
-library(ProfilerAPI2)
+library(xopggexpdatasets) # internal package
+library(ProfilerAPI2) # internal package
 
 save_dir="Tumor_bulk_analysis/"
 data_dir= "data/Tumor_bulk/"
@@ -34,6 +34,8 @@ tcga <- getRefClass("TCGAExprDataset")$new(connection = api$conn)
 
 data <- tcga$get_data_frame(c(all_genes,"meta_tcga_cohort","id_tcga_participant_barcode"))
 
+saveRDS(data,paste0(data_dir,"TCGA_IFN_TCD8genes_mtx_new_compressed.RDS"))
+data=readRDS(paste0(data_dir,"TCGA_IFN_TCD8genes_mtx_new_compressed.RDS"))
 
 # Calculate zscale mean signature scores for each cohort separately
 
@@ -352,6 +354,4 @@ pdf(paste0(save_dir,"zCorhistos_IFNI_cd8_vs_ourIFNs.pdf"),width = 25,height = 20
 final_plot
 
 dev.off()
-
-# saved from plots window zCovariance.pdf better resolution"
 
