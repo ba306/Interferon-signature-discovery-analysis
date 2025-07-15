@@ -559,6 +559,6 @@ lapply(IFN_list_ind, length)
 
 # Generate plots for boxplots and heatmap in discovery and validation datasets using IFN Aybey signatures and published ones
 source(paste0(save_dir,"THESIS_boxplots_discovery_validation_wstats.R"))
-source(paste0(save_dir,"THESIS_Discovery_heatmap_woIFNb.R"))
-source(paste0(save_dir,"THESIS_Validation_heatmap_woIFNb.R"))
+source(paste0(save_dir,"Discovery_heatmap_all.R"))
+source(paste0(save_dir,"Validation_heatmap_all.R"))
 
